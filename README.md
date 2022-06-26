@@ -25,8 +25,8 @@
 ## Installation/專案安裝
 ### Clone
 ```
-git clone 
-cd 
+git clone https://github.com/AC-Galen/expense-tracker.git
+cd expense-tracker
 npm install
 ```
 
