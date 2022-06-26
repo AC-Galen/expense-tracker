@@ -1,1 +1,60 @@
-<h2> index測試! </h2>
+<div class="row mt-3">
+  <div class="col-6 mx-auto">
+    <form action="/">
+      <select class="form-select form-select-lg mb-3" id="category" name="category" aria-label=".form-select-lg example"
+        onchange="form.submit()">
+        <option selected>{{ title }}</option>
+        {{#each categories}}
+        <option value="{{ this._id }}">{{ this.name }}</option>
+        {{/each}}
+      </select>
+    </form>
+  </div>
+</div>
+
+<div class="row mt-3">
+  <div class="col-6 mx-auto">
+    <div class="row fw-bold">
+      <div class="col-3 align-self-start fs-3">
+        總金額：
+      </div>
+      <div class="col-9 text-end align-self-end" style="font-size: 90px; color: orange;">
+        {{ totalAmount }}
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mt-3">
+  <div class="col-9 mx-auto">
+    <ul class="list-group">
+      {{#each records}}
+      <li class="row">
+        <div class="col-8 list-group-item list-group-item-light">
+          <div class="row">
+            <i class="fa-solid {{ this.category }} col-2 align-self-center text-end"
+              style="font-size: 55px; color: lightblue"></i>
+            <div class="col-7 align-self-center">
+              <h3 class="fw-bold">{{ this.name }}</h3>
+              <h5 class="fw-bold">{{ this.date }}</h5>
+            </div>
+            <div class="col-3 text-end align-self-center fs-2">{{ this.amount }}</div>
+          </div>
+        </div>
+        <div class="col-4 text-center align-self-center">
+          <a href="/records/{{ this._id }}/edit">
+          <button  class="btn btn-link text-decoration-none text-reset">修改</button>
+          </a>
+          <form action="/records/{{ this._id }}/delete?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-link text-decoration-none text-reset "
+              style="display: inline;">刪除</button>
+          </form>
+        </div>
+      </li>
+      {{/each}}
+    </ul>
+  </div>
+</div>
+
+<div class="row mt-5">
+  <a href="/records/new" type="button" class="btn btn-warning col-4 mx-auto">新增支出</a>
+</div>

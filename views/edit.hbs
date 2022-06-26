@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-6 mx-auto">
+    <form action="/records/{{ record._id }}?_method=PUT" method="POST">
+      <div class="mb-3 row">
+        <label for="note" class="col-sm-3 col-form-label">*必填欄位</label>
+        <div class="col-sm-9">
+          <input type="text" readonly  class="form-control-plaintext" id="note" value="請修改支出">
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="name" class="col-sm-3 col-form-label">名稱*</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="name" name="name" value="{{ record.name }}">
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="date" class="col-sm-3 col-form-label">日期*</label>
+        <div class="col-sm-9">
+          <input type="date" class="form-control" id="date" name="date" value="{{ record.date }}">
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="category" class="col-sm-3 col-form-label">類別*</label>
+        <div class="col-sm-9">
+          <select class="form-select" name="category" id="category" aria-label=".form-select example">
+            <option selected>{{ record.category }}</option>
+            {{#each categories}}
+              <option value="{{ this._id }}">{{ this.name }}</option>
+            {{/each}}
+          </select>
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="amount" class="col-sm-3 col-form-label">金額*</label>
+        <div class="col-sm-9">
+          <input type="number" min="0" class="form-control" id="amount" name="amount" value="{{ record.amount }}">
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label"></label>
+        <div class="col-sm-9">
+          <button type="submit" class="btn btn-outline-dark form-control">送出</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
