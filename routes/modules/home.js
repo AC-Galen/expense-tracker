@@ -5,25 +5,25 @@ const Record = require('../../models/record')
 
 router.get('/', async (req, res) => {
   try {
-    const userId = req.user._id
-    const categoryId = req.query.Category
-    const categorySelect = await Category.findById(categoryId).lean()
-    const title = categoryId ? categorySelect.name : '類型'
-    const categories = await Category.find().lean().sort('id')
-    const recordsFind = categoryId ? await Record.find({ categoryId, userId }).lean() : await Record.find({ userId }).lean()
-    const records = []
     let totalAmount = 0
-    await Promise.all(
-      recordsFind.map(async record => {
-        const categoryFind = await Category.findById(record.categoryId).lean()
-        record.category = categoryFind.icon
-        records.push(record)
-        totalAmount += record.amount
+    const userId = req.user._id
+    const categoryId = req.query.category
+    const categories = await Category.find().sort('id').lean()
+
+    let records = categoryId ? await Record.find({ userId, categoryId }).lean() : await Record.find({ userId }).lean()
+
+    for (let item of records) {
+      categories.filter(category => {
+        if ((category._id).toString() === (item.categoryId).toString()) {
+          item.icon = category.icon
+        }
       })
-    )
-    res.render('index', { totalAmount, title, categories, records })
-  }
-  catch (err) {
+      totalAmount += item.amount
+    }
+
+    return res.render('index', { records, totalAmount, categories })
+
+  } catch (err) {
     console.log(err)
   }
 })

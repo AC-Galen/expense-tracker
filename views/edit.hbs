@@ -4,7 +4,7 @@
       <div class="mb-3 row">
         <label for="note" class="col-sm-3 col-form-label">*必填欄位</label>
         <div class="col-sm-9">
-          <input type="text" readonly  class="form-control-plaintext" id="note" value="請修改支出">
+          <input type="text" readonly class="form-control-plaintext" id="note" value="請修改支出">
         </div>
       </div>
       <div class="mb-3 row">
@@ -22,10 +22,13 @@
       <div class="mb-3 row">
         <label for="category" class="col-sm-3 col-form-label">類別*</label>
         <div class="col-sm-9">
-          <select class="form-select" name="category" id="category" aria-label=".form-select example">
-            <option selected>{{ record.category }}</option>
+          <select class="form-select" name="categoryId" id="categoryId" aria-label=".form-select example">
+            {{#if record }}<option selected value="{{ record.categoryId }}">{{ record.category }}</option>
+            {{else}}
+            <option selected>類別</option>
+            {{/if}}
             {{#each categories}}
-              <option value="{{ this._id }}">{{ this.name }}</option>
+            <option value="{{ this._id }}">{{ this.name }}</option>
             {{/each}}
           </select>
         </div>

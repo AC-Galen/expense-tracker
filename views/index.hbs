@@ -1,11 +1,11 @@
 <div class="row mt-3">
   <div class="col-6 mx-auto">
     <form action="/">
-      <select class="form-select form-select-lg mb-3" id="category" name="category" aria-label=".form-select-lg example"
-        onchange="form.submit()">
-        <option selected>{{ title }}</option>
+      <select name="category" id="category" onchange="form.submit()" class="form-select">
+        <option value="x" selected disabled hidden>類別</option>
+        <option value="">全部</option>
         {{#each categories}}
-        <option value="{{ this._id }}">{{ this.name }}</option>
+        <option value="{{this._id}}">{{this.name}}</option>
         {{/each}}
       </select>
     </form>
@@ -31,7 +31,7 @@
       <li class="row">
         <div class="col-8 list-group-item list-group-item-light">
           <div class="row">
-            <i class="fa-solid {{ this.category }} col-2 align-self-center text-end"
+            <i class="{{ this.icon }} list-icon col-2 align-self-center text-end"
               style="font-size: 55px; color: lightblue"></i>
             <div class="col-7 align-self-center">
               <h3 class="fw-bold">{{ this.name }}</h3>
@@ -42,7 +42,7 @@
         </div>
         <div class="col-4 text-center align-self-center">
           <a href="/records/{{ this._id }}/edit">
-          <button  class="btn btn-link text-decoration-none text-reset">修改</button>
+            <button class="btn btn-link text-decoration-none text-reset">修改</button>
           </a>
           <form action="/records/{{ this._id }}/delete?_method=DELETE" method="POST">
             <button type="submit" class="btn btn-link text-decoration-none text-reset "
