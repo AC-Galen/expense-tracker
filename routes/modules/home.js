@@ -5,21 +5,21 @@ const Record = require('../../models/record')
 
 router.get('/', async (req, res) => {
   try {
-    let totalAmount = 0
+
     const userId = req.user._id
     const categoryId = req.query.category
     const categories = await Category.find().sort('id').lean()
 
-    let records = categoryId ? await Record.find({ userId, categoryId }).lean() : await Record.find({ userId }).lean()
+    const filter = categoryId ? { userId, categoryId } : { userId }
+    const records = await Record.find(filter).lean()
+    
+    records.forEach(record => {
+      record.icon = categories.filter(category => (record.categoryId).equals(category._id))[0].icon
+    })
 
-    for (let item of records) {
-      categories.filter(category => {
-        if ((category._id).toString() === (item.categoryId).toString()) {
-          item.icon = category.icon
-        }
-      })
-      totalAmount += item.amount
-    }
+    let totalAmount = records.reduce((total, record) => {
+      return total + Number(record.amount)
+    }, 0)
 
     return res.render('index', { records, totalAmount, categories })
 
